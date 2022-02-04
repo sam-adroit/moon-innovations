@@ -1,5 +1,5 @@
 import React from "react";
-// import product1 from "../../assets/product1.jpg";
+import product1 from "../../assets/product1.jpg";
 import product2 from "../../assets/product2.jpg";
 import product3 from "../../assets/product3.jpg";
 import product4 from "../../assets/product4.jpg";
@@ -13,7 +13,7 @@ const BaseViewMainBody = () => {
       <div className="products">
         <div className="product-desc">
           <div className="prod-img">
-            <img src="./product1.jpg" alt="inverter" />
+            <img src={product1} alt="inverter" />
           </div>
           <h3>Product1</h3>
         </div>
