@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { setUserSession } from "../../utils/utils";
 import Logo from "../../assets/logo.png";
 import { FaTimes } from "react-icons/fa";
+import history from "../../utils/history";
+
 
 import "./LoginForm.styles.css";
 
@@ -27,7 +29,9 @@ const LoginForm = ({ logAcc }) => {
         setLoading(false);
         setUser("");
         setPassword("");
-        navigate("/dashboard");
+        //navigate("/dashboard");
+        history.push('/dashboard');
+        history.go();
         console.log("response", res);
       })
       .catch((err) => {
