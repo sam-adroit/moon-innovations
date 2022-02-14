@@ -29,6 +29,7 @@ const App = () => {
             !getUser("name") ? <Login logAcc="Login as Admin" /> : <Baseview />
           }
         />
+        {/* <Route path="/dashboard" element={<Baseview />} /> */}
         <Route
           path="/dashboard"
           element={getUser("name") ? <Baseview /> : <LandingPage />}

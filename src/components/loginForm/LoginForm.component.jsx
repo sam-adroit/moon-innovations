@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { setUserSession } from "../../utils/utils";
+import { Link, useNavigate, Redirect } from "react-router-dom";
+import { getToken, setUserSession } from "../../utils/utils";
 import Logo from "../../assets/logo.png";
 import { FaTimes } from "react-icons/fa";
 
@@ -27,63 +27,73 @@ const LoginForm = ({ logAcc }) => {
         setLoading(false);
         setUser("");
         setPassword("");
-        navigate("/dashboard");
-        console.log("response", res);
+        // setTimeout(() => {
+        //   navigate("/dashboard");
+        // }, 5000);
+        // console.log("response", res);
       })
       .catch((err) => {
         setLoading(false);
         setUser("");
         setPassword("");
         // console.log(err.response.data);
-        if (err.response.status === 400) {
-          setErrMsg(err.response.data);
-          // console.log(err);
-        }
+        // if (err.response.status === 400) {
+        //   setErrMsg(err.response.data);
+        //   // console.log(err);
+        // }
       });
 
     // console.log(user, password);
   };
-  return (
-    <div className="loginForm">
-      <div className="form-head">
-        <img src={Logo} alt="Moon Innovation" />
-        <h3>{logAcc}</h3>
-        <Link to="/">
-          <FaTimes className="timesFont" />
-        </Link>
+
+  const token = getToken();
+
+  if (token) {
+    console.log("token", token);
+    return navigate("/dashboard");
+  } else {
+    return (
+      <div className="loginForm">
+        <div className="form-head">
+          <img src={Logo} alt="Moon Innovation" />
+          <h3 onClick={() => navigate("/dashboard")}>{logAcc}</h3>
+          <Link to="/">
+            <FaTimes className="timesFont" />
+          </Link>
+        </div>
+        <form className="form" onSubmit={HandleSubmit}>
+          <div className="form-control">
+            <label htmlFor="username"></label>
+            <input
+              type="text"
+              onChange={(e) => setUser(e.target.value)}
+              name="username"
+              value={user}
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="password"></label>
+            <input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={password}
+              placeholder=".........."
+              required
+            />
+          </div>
+          {errMsg && (
+            <p style={{ fontSize: "0.8rem", color: "red" }}>{`*** ${
+              " " + errMsg + " "
+            }  ***`}</p>
+          )}
+          <button>{!loading ? "Login" : "Loading..."}</button>
+        </form>
       </div>
-      <form className="form" onSubmit={HandleSubmit}>
-        <div className="form-control">
-          <label htmlFor="username"></label>
-          <input
-            type="text"
-            onChange={(e) => setUser(e.target.value)}
-            name="username"
-            value={user}
-            placeholder="Username"
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="password"></label>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
-            value={password}
-            placeholder=".........."
-            required
-          />
-        </div>
-        {errMsg && (
-          <p style={{ fontSize: "0.8rem", color: "red" }}>{`*** ${
-            " " + errMsg + " "
-          }  ***`}</p>
-        )}
-        <button>{!loading ? "Login" : "Loading..."}</button>
-      </form>
-    </div>
-  );
+    );
+  }
 };
 
 export default LoginForm;
