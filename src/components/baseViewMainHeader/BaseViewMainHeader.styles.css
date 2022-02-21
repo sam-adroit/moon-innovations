@@ -38,8 +38,8 @@
 }
 
 .badge {
-  padding: 0.1em 0.2em;
-  border-radius: 55%;
+  padding: 0.3em 0.5em;
+  border-radius: 50%;
   background-color: lightblue;
 }
 
@@ -73,17 +73,21 @@
   margin-left: 0.8em;
 }
 
+.alarm--fired {
+  color: red;
+}
+
 .profile-details {
   display: flex;
   line-height: 1;
 }
 
 .profile--pics {
-  width: 34px;
+  width: 40px;
 }
 
 .profile--pics img {
-  max-width: 100%;
+  width: 35px;
   max-height: 34px;
   border-radius: 50%;
 }

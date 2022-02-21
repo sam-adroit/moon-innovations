@@ -5,7 +5,7 @@ import DashboardBodyControl from "../dashboardBodyControl/DashboardBodyControl.c
 import "./DashboardMainBody.styles.css";
 const DashboardMainBody = () => {
   return (
-    <div className="dashboardView--main__body vert--grow__main--body">
+    <div className="dashboardView--main__body">
       <DashboardBodyLog />
       <DashboardBodyControl />
     </div>

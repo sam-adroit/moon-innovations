@@ -1,6 +1,6 @@
 .dashboard--view {
   width: 75%;
-  height: 96vh;
+  /* height: 96vh; */
   display: flex;
   flex-direction: column;
   background: rgb(6, 6, 29);

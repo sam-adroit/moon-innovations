@@ -1,18 +1,50 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { authContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import { removeUserSession } from "../../utils/utils";
+// import { removeUserSession } from "../../utils/utils";
 import profilePics from "../../assets/profile-pics.jpg";
-import { BiSearchAlt, BiLogOut } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
 import { FaList, FaEllipsisV } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { CgMenuGridR } from "react-icons/cg";
 import { IoRefreshCircleOutline } from "react-icons/io5";
 import { BsBellFill } from "react-icons/bs";
+import { GiRingingBell } from "react-icons/gi";
 
 import "./BaseViewMainHeader.styles.css";
 
 const BaseViewMainHeader = () => {
-  const [logout, setLogout] = useState(false);
+  const { logout, token } = useContext(authContext);
+  const [logoutdd, setLogoutdd] = useState(false);
+  const [alarm, setAlarm] = useState(false);
+
+  const handleAlarm = () => {
+    setAlarm(!alarm);
+    if (alarm) {
+      fetch(
+        "https://inverterdev.herokuapp.com/dashboard/status/control_alarmOn",
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+          },
+        }
+      ).then((res) => console.log(res));
+    } else {
+      fetch(
+        "https://inverterdev.herokuapp.com/dashboard/status/control_alarmOff",
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    }
+  };
+
+  //inverterdev.herokuapp.com/dashboard/status/control_alarmOff
+
   return (
     <div className="baseview-header">
       <ul className="navigation">
@@ -32,7 +64,13 @@ const BaseViewMainHeader = () => {
         <div className="notifications">
           <IoRefreshCircleOutline />
           <CgMenuGridR />
-          <BsBellFill />
+          <span onClick={handleAlarm}>
+            {alarm ? (
+              <GiRingingBell className="alarm--fired" />
+            ) : (
+              <BsBellFill />
+            )}
+          </span>
         </div>
         <div className="profile-details">
           <div className="profile--pics">
@@ -43,10 +81,10 @@ const BaseViewMainHeader = () => {
             <p>CSO MON</p>
           </div>
           <div className="ellipsis">
-            <FaEllipsisV onClick={() => setLogout(!logout)} />
-            {console.log(logout)}
-            <div className={!logout ? "logout" : "logout logout--display"}>
-              <Link onClick={() => removeUserSession()} to="/login">
+            <FaEllipsisV onClick={() => setLogoutdd(!logoutdd)} />
+            {/* {console.log(logout)} */}
+            <div className={!logoutdd ? "logout" : "logout logout--display"}>
+              <Link onClick={logout} to="/">
                 <BiLogOut /> Logout
               </Link>
             </div>

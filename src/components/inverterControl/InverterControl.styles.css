@@ -72,3 +72,11 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.8rem;
 }
+
+.off--switch {
+  color: red;
+}
+
+.on--switch {
+  color: green;
+}
